@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block menu %}
+        <a class="text-white text-center px-3" href="{% url 'webapp:one_photo_view' gallery.pk %}" >Отмена</a>
+{% endblock %}
+
+{% block title %}Product Update{% endblock %}
+
+{% block contant %}
+    <h3 class=" col-md-6 pt-4"><b>Update Product:</b></h3>
+    {% include 'partial/form.html' with  form_method='post' enctype="multipart/form-data"%}
+{% endblock %}

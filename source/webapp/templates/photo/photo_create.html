@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block menu %}
-        <a class="text-white text-center px-3"  href="{% url 'webapp:photo' %}" >Отмена</a>
+        <a class="text-white text-center px-3"  href="{% url 'webapp:photos' %}" >Отмена</a>
 {% endblock %}
 
 {% block title %}Create Photo{% endblock %}
 
 {% block contant %}
     <h3 class=" col-md-6 pt-4"><b>Create Photo:</b></h3>
-    {% include 'partial/form.html' with  form_method='post' %}
+    {% include 'partial/form.html' with  form_method='post' enctype="multipart/form-data"%}
 {% endblock %}

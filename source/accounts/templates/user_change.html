@@ -3,17 +3,17 @@
 {% block title %}Редактировать пользователя{% endblock %}
 
 {% block menu %}
-    <li><a href="{% url "accounts:detail" user_obj.pk %}">Назад</a></li>
-    <li><a href="{% url "accounts:password_change" %}">Смена пароля</a></li>
+        <a class="text-white text-center px-3" href="{% url "accounts:detail" user_obj.pk %}">Назад </a>
+        <a class="text-white text-center px-3" href="{% url "accounts:password_change" user_obj.pk %}">Смена пароля</a>
 {% endblock %}
 
-{% block content %}
-    <h1>Поменять личные данные</h1>
+{% block contant %}
+    <h1 class="ml-5 pt-5">Поменять личные данные</h1>
     <form action="{% url 'accounts:change' user_obj.pk %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {% include 'partial/form.html' with form=form fields_only=True %}
         {% include 'partial/form.html' with form=profile_form fields_only=True %}
         <br>
-        <input type="submit" value="Submit">
+        <input type="submit" class="btn btn-primary mb-2" value="Submit">
     </form>
 {% endblock %}

@@ -124,8 +124,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-LOGIN_REDIRECT_URL = 'webapp:index'
-LOGOUT_REDIRECT_URL = 'webapp:index'
+LOGIN_REDIRECT_URL = 'webapp:photos'
+LOGOUT_REDIRECT_URL = 'webapp:photos'
+
 LOGIN_URL = 'accounts:login'
 
 # SMTP settings

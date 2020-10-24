@@ -20,9 +20,14 @@
     <hr>
 {% for photo in gallery %}
     <div class="row">
-        <div class="col col-lg-7 pl-5">
-            <h3><a href="{% url 'product_view' photo.pk %}"><b>Подпись: {{ photo.signature }} </b></a> </h3>
-            <p>Автор: {{ photo.author }} | Добавленно: {{ photo.created_at }}</p>
+        <div class="col col-lg-12 pl-5">
+            <div class="box">
+                <img src="{{photo.photo.url }}" width="300" height="200" alt="Foto">
+                <b>Автор : {{ photo.author }}.  | Дата: {{ photo.created_at | date }}</b>
+            </div>
+            <h3><a href="{% url 'webapp:one_photo_view' photo.pk %}"><b>Подпись: {{ photo.signature }} </b></a> </h3>
+        </div>
+    </div>
 {% endfor %}
 
     <hr>

@@ -1,39 +1,31 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
-{% block title %}View product{% endblock %}
+{% block title %}View photo{% endblock %}
 {% block menu %}
-    {% if user.is_authenticated %}
-        <a class="text-white text-center px-3" href="{% url 'review_create' product.pk %}">Добавить отзыв</a>
-    {% endif %}
+{#    {% if user.is_authenticated %}#}
+{#        <a class="text-white text-center px-3" href="{% url 'review_create' product.pk %}">Добавить отзыв</a>#}
+{#    {% endif %}#}
 {% endblock %}
 
 {% block contant %}
 
 <div class="row">
     <div class="col col-lg-12 text-center">
-        <h1 class="pt-5 mt-5"><b>Product: №{{ product.pk }}.
-            {% if perms.webapp.change_product  %}
-            <a href="{% url 'product_update' product.pk %}" ><button type="button"  class="btn btn-success">Update</button></a>
-            {% endif %}
-            {% if perms.webapp.delete_product  %}
-            <a href="{% url 'product_delete' product.pk %}" ><button type="button"  class="btn btn-danger">Delete. </button></a>
-            {% endif %}
+        <h1 class="pt-1 mt-1"><b>Photo: №{{ gallery.pk }}.
+{#            {% if perms.webapp.change_product  %}#}
+            <a href="{% url 'webapp:photo_update' gallery.pk %}" ><button type="button"  class="btn btn-success">Update</button></a>
+{#            {% endif %}#}
+{#            {% if perms.webapp.delete_product  %}#}
+{#            <a href="{% url 'product_delete' product.pk %}" ><button type="button"  class="btn btn-danger">Delete. </button></a>#}
+{#            {% endif %}#}
         </b></h1>
-        <h3> Наименование: <b class="text-primary"> {{ product.name }}. Средняя оценка: {{ avg_mark | floatformat }}</b></h3>
+        <h3>  Описание: <b class="text-primary"> {{ gallery.signature }}</b></h3>
         <div class="box">
-            <p >Описание: </p>
-            <hr>
-            {% if not product.image %}
-            <img src="{% static "img/product.jpg" %}" alt="Продукт">
-            {% else %}
-                <img src="{{product.image.url }}" width="300" height="200" alt="Foto">
-            {% endif %}
-            {{ product.description | linebreaks }}
+            <img src="{{gallery.photo.url }}" width="800" height="500" alt="Foto"><br>
+           <b class="m-3">Автор : {{ gallery.author }} | Дата {{ gallery.created_at }}</b>
         </div>
-<h2 class="text-center clear">Отзывы:</h2>
-    {% include 'partial/review_list.html'  with reviews=reviews%}
-        <hr>
+
         <div class="col col-lg-12">
             {% if is_paginated %}
                 {% include 'partial/pagination.html' %}

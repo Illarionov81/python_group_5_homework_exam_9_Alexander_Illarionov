@@ -30,5 +30,22 @@ class PhotoCreateView(CreateView):
     form_class = PhotoForm
     # permission_required = 'webapp.add_product'
 
+    def form_valid(self, form):
+        photo = form.save(commit=False)
+        photo.author = self.request.user
+        photo.save()
+        return redirect('webapp:one_photo_view', pk=photo.pk)
+
     def get_success_url(self):
         return reverse('product_view', kwargs={'pk': self.object.pk})
+
+
+class PhotoUpdateView(UpdateView):
+    template_name = 'photo/photo_update.html'
+    form_class = PhotoForm
+    model = Gallery
+    # permission_required = 'webapp.change_article'
+
+    def get_success_url(self):
+        return reverse('webapp:one_photo_view', kwargs={'pk': self.object.pk})
+

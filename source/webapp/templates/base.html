@@ -24,7 +24,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
 {% if user.is_authenticated %}
                     {% if perms.webapp.add_product %}
-{#                        <a class="text-white text-center px-3" href="{% url 'product_create_view' %}">Добавить товар</a>#}
+                        <a class="text-white text-center px-3" href="{% url 'webapp:photo_create' %}">Добавить фото</a>
                     {% endif %}
                         {% block menu %}
                         {% endblock %}
