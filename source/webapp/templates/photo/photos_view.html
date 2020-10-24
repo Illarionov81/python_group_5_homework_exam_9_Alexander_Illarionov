@@ -1,17 +1,10 @@
 {% extends 'base.html' %}
+{% load likes %}
 
 {% block title %}Gallery: {% endblock %}
 
 {% block contant %}
-<hr>
-<div class="row text-center">
-    <div class="col col-lg-12 ml-5 mt-3">
-        {% if is_paginated %}
-            {% include 'partial/pagination.html' %}
-        {% endif %}
-    </div>
-</div>
-<hr>
+
     <div class="row">
         <div class="col col-lg-6 ml-5">
             <h1 class="pt-4"><b>Gallery: </b></h1>
@@ -27,12 +20,17 @@
             </div>
             <h3><a href="{% url 'webapp:one_photo_view' photo.pk %}"><b>Подпись: {{ photo.signature }} </b></a> </h3>
         </div>
+     {% if user.is_authenticated %}
+        <p>
+            {% with photo|liked_by:user as liked %}
+                <a class="{% if liked %}hidden{% endif %} like" href="{% url 'webapp:favorites_add' photo.pk %}">Добавить в избранное</a>
+                <a class="{% if not liked %}hidden{% endif %} unlike" href="{% url 'webapp:favorites_delete' photo.pk %}">Удалить из избранного</a>
+            {% endwith %}
+        </p>
+        {% endif %}
     </div>
     <hr>
 {% endfor %}
 
-{% if is_paginated %}
-    {% include 'partial/pagination.html' %}
-{% endif %}
 <hr>
 {% endblock %}

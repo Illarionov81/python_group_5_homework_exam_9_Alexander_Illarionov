@@ -9,12 +9,18 @@ class Gallery(models.Model):
                                verbose_name='Автор')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
 
+    def liked_by(self, user):
+        favorites = self.favorites.filter(user=user)
+        return favorites.count() > 0
+
     def __str__(self):
         return f'{self.author} - {self.signature}'
 
     class Meta:
         verbose_name = 'Gallery'
         verbose_name_plural = 'Gallery'
+
+
 
 
 class Favorites(models.Model):
@@ -25,6 +31,7 @@ class Favorites(models.Model):
 
     def __str__(self):
         return f'{self.user.username} - {self.photo.signature}'
+
 
     class Meta:
         verbose_name = 'Избранное'

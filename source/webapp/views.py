@@ -1,13 +1,14 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, \
     UserPassesTestMixin
-from django.core.paginator import Paginator
-from django.db.models import Q, Count, Avg
-from django.shortcuts import redirect
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponse, HttpResponseForbidden
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
+from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from webapp.forms import PhotoForm
-from webapp.models import Gallery
+from webapp.models import Gallery, Favorites
 
 
 class PhotoView(ListView):
@@ -70,3 +71,26 @@ class PhotoDeleteView(UserPassesTestMixin, DeleteView):
     def test_func(self):
         return self.request.user.has_perm('webapp.delete_gallery') or \
             self.get_object().author == self.request.user
+
+
+class FavoritesAddView(View):
+    def post(self, request, *args, **kwargs):
+        photo = get_object_or_404(Gallery, pk=kwargs.get('pk'))
+        try:
+            favorites = Favorites.objects.get(photo=photo, user=request.user)
+            if favorites:
+                return HttpResponse(favorites)
+        except ObjectDoesNotExist:
+            favorites = Favorites.objects.create(photo=photo, user=request.user)
+            favorites.save()
+            return HttpResponse(favorites)
+        else:
+            return HttpResponseForbidden()
+
+
+class FavoritesDeleteView(View):
+    def delete(self, request, *args, **kwargs):
+        photo = get_object_or_404(Gallery, pk=kwargs.get('pk'))
+        favorites = get_object_or_404(photo.favorites, user=request.user)
+        favorites.delete()
+        return HttpResponse()
