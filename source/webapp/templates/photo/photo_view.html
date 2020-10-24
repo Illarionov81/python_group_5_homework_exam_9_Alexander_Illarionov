@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load staticfiles %}
+{% load staticfiles likes %}
 
 {% block title %}View photo{% endblock %}
 {% block menu %}
@@ -24,6 +24,14 @@
             {% for i in favorites %}
                  <a href="{% url 'accounts:detail' i.user.pk %}"><b>{{ i.user }}. </b></a>
             {% endfor %}
+        {% if user.is_authenticated %}
+        <p>
+            {% with gallery|liked_by:user as liked %}
+                <a class="{% if liked %}hidden{% endif %} like" href="{% url 'webapp:favorites_add' gallery.pk %}">Добавить в избранное</a>
+                <a class="{% if not liked %}hidden{% endif %} unlike" href="{% url 'webapp:favorites_delete' gallery.pk %}">Удалить из избранного</a>
+            {% endwith %}
+        </p>
+        {% endif %}
         </div>
 
         <div class="col col-lg-12">

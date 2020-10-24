@@ -61,6 +61,7 @@ async function unfavorites(event) {
     let unlikeBtn = event.target;
     let url = unlikeBtn.href;
 
+
     try {
         let response = await makeRequest(url, 'DELETE');
         console.log(response);
