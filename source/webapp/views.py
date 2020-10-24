@@ -26,12 +26,14 @@ class OnePhotoView(DetailView):
     paginate_review_by = 5
     paginate_review_orphans = 0
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     gallery = Gallery.objects.get(pk=self.kwargs.get('pk'))
-    #     print(gallery.favorites)
-    #     context['user'] = gallery.favorites
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        gallery = Gallery.objects.get(pk=self.kwargs.get('pk'))
+        favorites = Favorites.objects.filter(photo=gallery.pk)
+        context['favorites'] = favorites.all()
+        for i in favorites.all():
+            print(i.user)
+        return context
 
 
 class PhotoCreateView(LoginRequiredMixin, CreateView):
@@ -73,7 +75,7 @@ class PhotoDeleteView(UserPassesTestMixin, DeleteView):
             self.get_object().author == self.request.user
 
 
-class FavoritesAddView(View):
+class FavoritesAddView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         photo = get_object_or_404(Gallery, pk=kwargs.get('pk'))
         try:
@@ -88,7 +90,7 @@ class FavoritesAddView(View):
             return HttpResponseForbidden()
 
 
-class FavoritesDeleteView(View):
+class FavoritesDeleteView(LoginRequiredMixin, View):
     def delete(self, request, *args, **kwargs):
         photo = get_object_or_404(Gallery, pk=kwargs.get('pk'))
         favorites = get_object_or_404(photo.favorites, user=request.user)
