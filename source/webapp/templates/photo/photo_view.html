@@ -17,7 +17,7 @@
             <a href="{% url 'webapp:photo_update' gallery.pk %}" ><button type="button"  class="btn btn-success">Update</button></a>
 {#            {% endif %}#}
 {#            {% if perms.webapp.delete_product  %}#}
-{#            <a href="{% url 'product_delete' product.pk %}" ><button type="button"  class="btn btn-danger">Delete. </button></a>#}
+            <a href="{% url 'webapp:photo_delete' gallery.pk %}" ><button type="button"  class="btn btn-danger">Delete. </button></a>
 {#            {% endif %}#}
         </b></h1>
         <h3>  Описание: <b class="text-primary"> {{ gallery.signature }}</b></h3>

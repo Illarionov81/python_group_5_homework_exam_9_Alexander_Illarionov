@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Удаление фото{% endblock %}
+
+{% block menu %}
+        <a class="text-white text-center px-3"  href="{% url 'webapp:one_photo_view' gallery.pk %}" >Просмотр</a>
+{% endblock %}
+
+{% block contant %}
+    <div class="coL col-lg-12 mt-5">
+        <h1 class="pt-4">Вы действительно хотите удалить фото: # <b class="text-primary">{{ gallery.signature }}</b> ?</h1>
+    </div>
+    <div class="row">
+        <form method="POST" action="{% url "webapp:photo_delete" gallery.pk %}" class="text-center">
+            {% csrf_token %}
+        <div class="coL col-lg-3 ml-5 mt-1">
+            <a href="{% url "webapp:photo_delete" gallery.pk %}" >
+                <button type="submit"  class="btn btn-danger">Delete</button>
+            </a>
+        </div>
+        </form>
+        <div class="coL col-lg-3  mt-1">
+            <a href="{% url 'webapp:one_photo_view' gallery.pk %}" >
+                <button type="submit"  class="btn btn-primary">Отмена</button>
+            </a>
+        </div>
+    </div>
+
+{% endblock %}

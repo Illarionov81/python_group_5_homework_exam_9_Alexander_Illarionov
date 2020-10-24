@@ -28,9 +28,8 @@
             <h3><a href="{% url 'webapp:one_photo_view' photo.pk %}"><b>Подпись: {{ photo.signature }} </b></a> </h3>
         </div>
     </div>
-{% endfor %}
-
     <hr>
+{% endfor %}
 
 {% if is_paginated %}
     {% include 'partial/pagination.html' %}

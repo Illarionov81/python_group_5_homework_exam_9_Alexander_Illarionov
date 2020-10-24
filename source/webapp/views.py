@@ -13,6 +13,7 @@ class PhotoView(ListView):
     template_name = 'photo/photos_view.html'
     context_object_name = 'gallery'
     model = Gallery
+    ordering = ['-created_at']
     paginate_by = 5
     paginate_orphans = 0
 
@@ -22,6 +23,13 @@ class OnePhotoView(DetailView):
     model = Gallery
     paginate_review_by = 5
     paginate_review_orphans = 0
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     gallery = Gallery.objects.get(pk=self.kwargs.get('pk'))
+    #     print(gallery.favorites)
+    #     context['user'] = gallery.favorites
+    #     return context
 
 
 class PhotoCreateView(CreateView):
@@ -49,3 +57,13 @@ class PhotoUpdateView(UpdateView):
     def get_success_url(self):
         return reverse('webapp:one_photo_view', kwargs={'pk': self.object.pk})
 
+
+# UserPassesTestMixin,
+class PhotoDeleteView( DeleteView):
+    template_name = 'photo/photo_delete.html'
+    model = Gallery
+    success_url = reverse_lazy('webapp:photos')
+
+    # def test_func(self):
+    #     return self.request.user.has_perm('webapp.delete_article') or \
+    #         self.get_object().author == self.request.user
