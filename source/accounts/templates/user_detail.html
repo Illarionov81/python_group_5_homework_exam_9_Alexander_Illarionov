@@ -20,17 +20,39 @@
     <p>Почта: {{ user_obj.email }}</p>
 
     <h2 class="text-center clear">Понравившиеся фотографии:</h2>
-{#    {% include 'partial/partial_list.html' with likes=likes %}#}
     {% for photo in gallery %}
-        <div class="row">
-            <div class="col col-lg-12 pl-5">
-                <div class="box">
-                    <img src="{{ photo.photo.photo.url }}" width="300" height="200" alt="Foto">
-                    <b>Автор : {{ photo.photo.author }}.  | Дата: {{ photo.photo.created_at | date:"Y-m-d H:m:s" }}</b>
-                </div>
-                <h3><a href="{% url 'webapp:one_photo_view' photo.pk %}"><b>Подпись: {{ photo.photo.signature }} </b></a> </h3>
+    <div class="row">
+        <div class="col col-lg-12 pl-5">
+            <div class="box">
+                <img src="{{ photo.photo.photo.url }}" width="300" height="200" alt="Foto">
+                <b>Автор : <a href="{% url 'accounts:detail' photo.photo.author.pk %}"><b>{{ photo.photo.author }}. </b></a>  | Дата: {{ photo.photo.created_at | date:"Y-m-d H:m:s"}}</b>
             </div>
+            <h3><a href="{% url 'webapp:one_photo_view' photo.photo.pk %}"><b>Подпись: {{ photo.photo.signature }} </b></a> </h3>
         </div>
+     {% if user.is_authenticated %}
+        <p>
+            {% with photo.photo|liked_by:user as liked %}
+                <a class="{% if liked %}hidden{% endif %} like" href="{% url 'webapp:favorites_add' photo.photo.pk %}">Добавить в избранное</a>
+                <a class="{% if not liked %}hidden{% endif %} unlike" href="{% url 'webapp:favorites_delete' photo.photo.pk %}">Удалить из избранного</a>
+            {% endwith %}
+        </p>
+        {% endif %}
+    </div>
+    <hr>
+    {% empty %}
+        <h2 class="text-center">Нет фотографий</h2>
     {% endfor %}
+{#    {% include 'partial/partial_list.html' %}#}
+{#    {% for photo in gallery %}#}
+{#        <div class="row">#}
+{#            <div class="col col-lg-12 pl-5">#}
+{#                <div class="box">#}
+{#                    <img src="{{ photo.photo.photo.url }}" width="300" height="200" alt="Foto">#}
+{#                    <b>Автор : <a href="{% url 'accounts:detail' photo.photo.author.pk %}"><b>{{ photo.photo.author }}. </b></a>  | Дата: {{ photo.photo.created_at | date:"Y-m-d H:m:s" }}</b>#}
+{#                </div>#}
+{#                <h3><a href="{% url 'webapp:one_photo_view' photo.pk %}"><b>Подпись: {{ photo.photo.signature }} </b></a> </h3>#}
+{#            </div>#}
+{#        </div>#}
+{#    {% endfor %}#}
 
 {% endblock %}
