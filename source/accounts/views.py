@@ -64,7 +64,7 @@ class UserDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = User.objects.get(pk=self.kwargs.get('pk'))
-        favorites = Favorites.objects.filter(user=user)
+        favorites = Favorites.objects.filter(user=user.pk)
         print(favorites)
         context['gallery'] = favorites
         return context

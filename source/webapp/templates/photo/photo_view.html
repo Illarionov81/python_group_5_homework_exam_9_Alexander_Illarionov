@@ -19,7 +19,7 @@
         <h3>  Описание: <b class="text-primary"> {{ gallery.signature }}</b></h3>
         <div class="box">
             <img src="{{gallery.photo.url }}" width="800" height="500" alt="Foto"><br>
-           <b class="m-3">Автор : {{ gallery.author }} | Дата {{ gallery.created_at }}</b><br>
+           <b class="m-3">Автор : {{ gallery.author }} | Дата {{ gallery.created_at | date:"Y-m-d H:m:s" }}</b><br>
             <b>Пользаватели кому понравилась даная фотография: </b>
             {% for i in favorites %}
                  <a href="{% url 'accounts:detail' i.user.pk %}"><b>{{ i.user }}. </b></a>
