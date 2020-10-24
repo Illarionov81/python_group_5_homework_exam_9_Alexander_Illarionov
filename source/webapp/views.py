@@ -1,4 +1,5 @@
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, \
+    UserPassesTestMixin
 from django.core.paginator import Paginator
 from django.db.models import Q, Count, Avg
 from django.shortcuts import redirect
@@ -32,11 +33,10 @@ class OnePhotoView(DetailView):
     #     return context
 
 
-class PhotoCreateView(CreateView):
+class PhotoCreateView(LoginRequiredMixin, CreateView):
     model = Gallery
     template_name = 'photo/photo_create.html'
     form_class = PhotoForm
-    # permission_required = 'webapp.add_product'
 
     def form_valid(self, form):
         photo = form.save(commit=False)
@@ -48,22 +48,25 @@ class PhotoCreateView(CreateView):
         return reverse('product_view', kwargs={'pk': self.object.pk})
 
 
-class PhotoUpdateView(UpdateView):
+class PhotoUpdateView(UserPassesTestMixin, UpdateView):
     template_name = 'photo/photo_update.html'
     form_class = PhotoForm
     model = Gallery
-    # permission_required = 'webapp.change_article'
+    permission_required = 'webapp.change_gallery'
 
     def get_success_url(self):
         return reverse('webapp:one_photo_view', kwargs={'pk': self.object.pk})
 
+    def test_func(self):
+        return self.request.user.has_perm('webapp.change_gallery') or \
+            self.get_object().author == self.request.user
 
-# UserPassesTestMixin,
-class PhotoDeleteView( DeleteView):
+
+class PhotoDeleteView(UserPassesTestMixin, DeleteView):
     template_name = 'photo/photo_delete.html'
     model = Gallery
     success_url = reverse_lazy('webapp:photos')
 
-    # def test_func(self):
-    #     return self.request.user.has_perm('webapp.delete_article') or \
-    #         self.get_object().author == self.request.user
+    def test_func(self):
+        return self.request.user.has_perm('webapp.delete_gallery') or \
+            self.get_object().author == self.request.user

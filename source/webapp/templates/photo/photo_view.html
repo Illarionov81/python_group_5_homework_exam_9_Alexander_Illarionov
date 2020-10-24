@@ -13,12 +13,12 @@
 <div class="row">
     <div class="col col-lg-12 text-center">
         <h1 class="pt-1 mt-1"><b>Photo: №{{ gallery.pk }}.
-{#            {% if perms.webapp.change_product  %}#}
+            {% if perms.webapp.change_gallery  or gallery.author == request.user %}
             <a href="{% url 'webapp:photo_update' gallery.pk %}" ><button type="button"  class="btn btn-success">Update</button></a>
-{#            {% endif %}#}
-{#            {% if perms.webapp.delete_product  %}#}
+            {% endif %}
+            {% if perms.webapp.delete_gallery or gallery.author == request.user  %}
             <a href="{% url 'webapp:photo_delete' gallery.pk %}" ><button type="button"  class="btn btn-danger">Delete. </button></a>
-{#            {% endif %}#}
+            {% endif %}
         </b></h1>
         <h3>  Описание: <b class="text-primary"> {{ gallery.signature }}</b></h3>
         <div class="box">
