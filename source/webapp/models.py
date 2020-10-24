@@ -25,7 +25,7 @@ class Gallery(models.Model):
 
 class Favorites(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE,
-                             related_name='photo_favorites', verbose_name='Пользователь')
+                             related_name='favorites', verbose_name='Пользователь')
     photo = models.ForeignKey('webapp.Gallery', on_delete=models.CASCADE,
                               related_name='favorites', verbose_name='избранное')
 

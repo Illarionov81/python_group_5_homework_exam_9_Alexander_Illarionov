@@ -11,26 +11,7 @@
         </div>
     </div>
     <hr>
-{% for photo in gallery %}
-    <div class="row">
-        <div class="col col-lg-12 pl-5">
-            <div class="box">
-                <img src="{{photo.photo.url }}" width="300" height="200" alt="Foto">
-                <b>Автор : {{ photo.author }}.  | Дата: {{ photo.created_at | date }}</b>
-            </div>
-            <h3><a href="{% url 'webapp:one_photo_view' photo.pk %}"><b>Подпись: {{ photo.signature }} </b></a> </h3>
-        </div>
-     {% if user.is_authenticated %}
-        <p>
-            {% with photo|liked_by:user as liked %}
-                <a class="{% if liked %}hidden{% endif %} like" href="{% url 'webapp:favorites_add' photo.pk %}">Добавить в избранное</a>
-                <a class="{% if not liked %}hidden{% endif %} unlike" href="{% url 'webapp:favorites_delete' photo.pk %}">Удалить из избранного</a>
-            {% endwith %}
-        </p>
-        {% endif %}
-    </div>
-    <hr>
-{% endfor %}
+{% include 'partial/partial_list.html' %}
 
 <hr>
 {% endblock %}

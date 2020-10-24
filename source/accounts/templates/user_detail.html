@@ -19,6 +19,17 @@
     <p>Фамилия: {{ user.last_name }}</p>
     <p>Почта: {{ user_obj.email }}</p>
 
-{#    <h2 class="text-center clear">Отзывы:</h2>#}
-{#    {% include 'partial/review_list.html'  with reviews=reviews%}#}
+    <h2 class="text-center clear">Понравившиеся фотографии:</h2>
+    {% for photo in gallery %}
+        <div class="row">
+            <div class="col col-lg-12 pl-5">
+                <div class="box">
+                    <img src="{{ photo.photo.url }}" width="300" height="200" alt="Foto">
+                    <b>Автор : {{ photo }}.  | Дата: {{ photo.created_at | date }}</b>
+                </div>
+                <h3><a href="{% url 'webapp:one_photo_view' photo.pk %}"><b>Подпись: {{ photo.signature }} </b></a> </h3>
+            </div>
+        </div>
+    {% endfor %}
+
 {% endblock %}

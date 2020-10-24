@@ -1,0 +1,82 @@
+[
+{
+  "model": "webapp.gallery",
+  "pk": 1,
+  "fields": {
+    "photo": "photo/ship_ceiU939.jpeg",
+    "signature": "\u043a\u043e\u0440\u0430\u0431\u043b\u044c \u0432 \u0448\u0442\u043e\u0440\u043c",
+    "author": 1,
+    "created_at": "2020-10-24T08:05:15.040Z"
+  }
+},
+{
+  "model": "webapp.gallery",
+  "pk": 2,
+  "fields": {
+    "photo": "photo/cat.jpg",
+    "signature": "\u043a\u043e\u0442 \u043a\u043e\u0441\u043c\u043e\u043d\u0430\u0432\u0442",
+    "author": 1,
+    "created_at": "2020-10-24T08:36:55.486Z"
+  }
+},
+{
+  "model": "webapp.gallery",
+  "pk": 4,
+  "fields": {
+    "photo": "photo/\u0430\u0432\u0430_vp2v1ib.jpg",
+    "signature": "Rocket cat",
+    "author": 2,
+    "created_at": "2020-10-24T09:14:26.008Z"
+  }
+},
+{
+  "model": "webapp.gallery",
+  "pk": 5,
+  "fields": {
+    "photo": "photo/man.jpg",
+    "signature": "Man",
+    "author": 1,
+    "created_at": "2020-10-24T09:25:19.870Z"
+  }
+},
+{
+  "model": "webapp.favorites",
+  "pk": 3,
+  "fields": {
+    "user": 1,
+    "photo": 4
+  }
+},
+{
+  "model": "webapp.favorites",
+  "pk": 4,
+  "fields": {
+    "user": 2,
+    "photo": 5
+  }
+},
+{
+  "model": "webapp.favorites",
+  "pk": 7,
+  "fields": {
+    "user": 1,
+    "photo": 1
+  }
+},
+{
+  "model": "webapp.favorites",
+  "pk": 9,
+  "fields": {
+    "user": 3,
+    "photo": 5
+  }
+},
+{
+  "model": "webapp.favorites",
+  "pk": 10,
+  "fields": {
+    "user": 1,
+    "photo": 5
+  }
+}
+]
