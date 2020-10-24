@@ -1,3 +1,34 @@
-from django.shortcuts import render
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.core.paginator import Paginator
+from django.db.models import Q, Count, Avg
+from django.shortcuts import redirect
+from django.urls import reverse, reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
-# Create your views here.
+from webapp.forms import PhotoForm
+from webapp.models import Gallery
+
+
+class PhotoView(ListView):
+    template_name = 'photo/photos_view.html'
+    context_object_name = 'gallery'
+    model = Gallery
+    paginate_by = 5
+    paginate_orphans = 0
+
+
+class OnePhotoView(DetailView):
+    template_name = 'photo/photo_view.html'
+    model = Gallery
+    paginate_review_by = 5
+    paginate_review_orphans = 0
+
+
+class PhotoCreateView(CreateView):
+    model = Gallery
+    template_name = 'photo/photo_create.html'
+    form_class = PhotoForm
+    # permission_required = 'webapp.add_product'
+
+    def get_success_url(self):
+        return reverse('product_view', kwargs={'pk': self.object.pk})

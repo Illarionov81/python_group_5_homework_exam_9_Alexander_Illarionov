@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}View product{% endblock %}
+{% block menu %}
+    {% if user.is_authenticated %}
+        <a class="text-white text-center px-3" href="{% url 'review_create' product.pk %}">Добавить отзыв</a>
+    {% endif %}
+{% endblock %}
+
+{% block contant %}
+
+<div class="row">
+    <div class="col col-lg-12 text-center">
+        <h1 class="pt-5 mt-5"><b>Product: №{{ product.pk }}.
+            {% if perms.webapp.change_product  %}
+            <a href="{% url 'product_update' product.pk %}" ><button type="button"  class="btn btn-success">Update</button></a>
+            {% endif %}
+            {% if perms.webapp.delete_product  %}
+            <a href="{% url 'product_delete' product.pk %}" ><button type="button"  class="btn btn-danger">Delete. </button></a>
+            {% endif %}
+        </b></h1>
+        <h3> Наименование: <b class="text-primary"> {{ product.name }}. Средняя оценка: {{ avg_mark | floatformat }}</b></h3>
+        <div class="box">
+            <p >Описание: </p>
+            <hr>
+            {% if not product.image %}
+            <img src="{% static "img/product.jpg" %}" alt="Продукт">
+            {% else %}
+                <img src="{{product.image.url }}" width="300" height="200" alt="Foto">
+            {% endif %}
+            {{ product.description | linebreaks }}
+        </div>
+<h2 class="text-center clear">Отзывы:</h2>
+    {% include 'partial/review_list.html'  with reviews=reviews%}
+        <hr>
+        <div class="col col-lg-12">
+            {% if is_paginated %}
+                {% include 'partial/pagination.html' %}
+            {% endif %}
+        </div>
+    </div>
+        <hr>
+{% endblock %}
+

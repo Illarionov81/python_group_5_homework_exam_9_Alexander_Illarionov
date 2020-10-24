@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Gallery: {% endblock %}
+
+{% block contant %}
+<hr>
+<div class="row text-center">
+    <div class="col col-lg-12 ml-5 mt-3">
+        {% if is_paginated %}
+            {% include 'partial/pagination.html' %}
+        {% endif %}
+    </div>
+</div>
+<hr>
+    <div class="row">
+        <div class="col col-lg-6 ml-5">
+            <h1 class="pt-4"><b>Gallery: </b></h1>
+        </div>
+    </div>
+    <hr>
+{% for photo in gallery %}
+    <div class="row">
+        <div class="col col-lg-7 pl-5">
+            <h3><a href="{% url 'product_view' photo.pk %}"><b>Подпись: {{ photo.signature }} </b></a> </h3>
+            <p>Автор: {{ photo.author }} | Добавленно: {{ photo.created_at }}</p>
+{% endfor %}
+
+    <hr>
+
+{% if is_paginated %}
+    {% include 'partial/pagination.html' %}
+{% endif %}
+<hr>
+{% endblock %}
