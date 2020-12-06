@@ -4,7 +4,9 @@
     <div class="row">
         <div class="col col-lg-12 pl-5">
             <div class="box">
-                <img src="{{photo.photo.url }}" width="300" height="200" alt="Foto">
+               <a href="{% url 'webapp:one_photo_view' photo.pk %}">
+                   <img src="{{photo.photo.url }}" width="30%" height="30%" alt="Foto">
+               </a>
                 <b>Автор : {{ photo.author }}.  | Дата: {{ photo.created_at | date:"Y-m-d H:m:s"}}</b>
             </div>
             <h3><a href="{% url 'webapp:one_photo_view' photo.pk %}"><b>Подпись: {{ photo.signature }} </b></a> </h3>
