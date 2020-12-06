@@ -1,26 +1,52 @@
 {% load likes %}
 
 {% for photo in gallery %}
-    <div class="row">
-        <div class="col col-lg-12 pl-5">
-            <div class="box">
+    <div class="box float-sm-left" >
                <a href="{% url 'webapp:one_photo_view' photo.pk %}">
-                   <img src="{{photo.photo.url }}" width="30%" height="30%" alt="Foto">
+                   <img src="{{photo.photo.url }}" width="300" height="200" alt="Foto">
                </a>
-                <b>Автор : {{ photo.author }}.  | Дата: {{ photo.created_at | date:"Y-m-d H:m:s"}}</b>
+            <div class="text-center">
+                <b>{{ photo.signature }} </b><br>
+                <b>Автор :<a href="{% url 'accounts:detail' photo.author.pk %}"> {{ photo.author }}. </a>
+                    | Дата: {{ photo.created_at | date:"Y-m-d"}}</b>
+                {% if user.is_authenticated %}
+                {% with photo|liked_by:user as liked %}
+                    <div class="col col-lg-12">
+                        <a class="{% if liked %}hidden{% endif %} like" href="{% url 'webapp:favorites_add' photo.pk %}">Добавить в избранное</a>
+                        <a class="{% if not liked %}hidden{% endif %} unlike" href="{% url 'webapp:favorites_delete' photo.pk %}">Удалить из избранного</a>
+                    </div>
+                {% endwith %}
+                {% endif %}
             </div>
-            <h3><a href="{% url 'webapp:one_photo_view' photo.pk %}"><b>Подпись: {{ photo.signature }} </b></a> </h3>
-        </div>
-     {% if user.is_authenticated %}
-        <p>
-            {% with photo|liked_by:user as liked %}
-                <a class="{% if liked %}hidden{% endif %} like" href="{% url 'webapp:favorites_add' photo.pk %}">Добавить в избранное</a>
-                <a class="{% if not liked %}hidden{% endif %} unlike" href="{% url 'webapp:favorites_delete' photo.pk %}">Удалить из избранного</a>
-            {% endwith %}
-        </p>
-        {% endif %}
     </div>
-    <hr>
-    {% empty %}
-        <h2 class="text-center">Нет фотографий</h2>
-    {% endfor %}
+{% empty %}
+    <h2 class="text-center">Нет фотографий</h2>
+{% endfor %}
+
+{#{% for photo in gallery %}#}
+{#    <div class="row">#}
+{#        <div class="col col-lg-12">#}
+{#            <div class="box">#}
+{#               <a href="{% url 'webapp:one_photo_view' photo.pk %}">#}
+{#                   <img src="{{photo.photo.url }}" width="300" height="200" alt="Foto">#}
+{#               </a>#}
+{#                <b>Автор : {{ photo.author }}.  | Дата: {{ photo.created_at | date:"Y-m-d H:m:s"}}</b>#}
+{#            </div>#}
+{#            <h3><a href="{% url 'webapp:one_photo_view' photo.pk %}"><b>Подпись: {{ photo.signature }} </b></a> </h3>#}
+{#        </div>#}
+{#     {% if user.is_authenticated %}#}
+{#        <p>#}
+{#            {% with photo|liked_by:user as liked %}#}
+{#                <div class="col col-lg-12">#}
+{#                    <a class="{% if liked %}hidden{% endif %} like" href="{% url 'webapp:favorites_add' photo.pk %}">Добавить в избранное</a>#}
+{#                    <a class="{% if not liked %}hidden{% endif %} unlike" href="{% url 'webapp:favorites_delete' photo.pk %}">Удалить из избранного</a>#}
+{#                </div>#}
+{##}
+{#            {% endwith %}#}
+{#        </p>#}
+{#        {% endif %}#}
+{#    </div>#}
+{#    <hr>#}
+{#    {% empty %}#}
+{#        <h2 class="text-center">Нет фотографий</h2>#}
+{#    {% endfor %}#}

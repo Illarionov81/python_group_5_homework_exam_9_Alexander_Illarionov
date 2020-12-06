@@ -57,7 +57,7 @@ hr {
 }
 
 .pagination a:hover {
-    background: #6a7dff;
+    background: #ff6a99;
     text-decoration: underline;
 }
 
@@ -84,10 +84,10 @@ hr {
 
 .box {
     box-sizing: border-box;
-    border: solid 1px gray;
+    border: solid 3px gray;
     border-radius: 10px;
-    margin: 10px;
     padding: 10px;
+    background-color: #fcf8e3;
 }
 
 .avatar {
@@ -96,6 +96,11 @@ hr {
     width: 250px;
     height: auto;
     margin: 0 20px 20px 40px ;
+}
+.word {
+    color: #1b1e21;
+    text-shadow: black 1px 0px, black 1px 1px, black 0px 1px, black -1px 1px, black -1px 0px,
+    black -1px -1px, black 0px -1px, black 1px -1px;
 }
 
 .text-center {

@@ -10,38 +10,40 @@
 {% endblock %}
 
 {% block contant %}
-    <h1 class="ml-5 pt-5">Личная страница пользователя {{ user_obj.get_full_name|default:user_obj.username }}</h1>
-    {% if user_obj.profile.avatar %}
-        <img class="avatar" src="{{ user_obj.profile.avatar.url }}" width="250" height="250" alt="user picture">
-    {% endif %}
-    <p>Login: {{ user.username }}</p>
-    <p>Имя: {{ user.first_name }}</p>
-    <p>Фамилия: {{ user.last_name }}</p>
-    <p>Почта: {{ user_obj.email }}</p>
-
-    <h2 class="text-center clear">Понравившиеся фотографии:</h2>
-    {% for photo in gallery %}
-    <div class="row">
-        <div class="col col-lg-12 pl-5">
-            <div class="box">
-                <img src="{{ photo.photo.photo.url }}" width="300" height="200" alt="Foto">
-                <b>Автор : <a href="{% url 'accounts:detail' photo.photo.author.pk %}"><b>{{ photo.photo.author }}. </b></a>  | Дата: {{ photo.photo.created_at | date:"Y-m-d H:m:s"}}</b>
-            </div>
-            <h3><a href="{% url 'webapp:one_photo_view' photo.photo.pk %}"><b>Подпись: {{ photo.photo.signature }} </b></a> </h3>
-        </div>
-     {% if user.is_authenticated %}
-        <p>
-            {% with photo.photo|liked_by:user as liked %}
-                <a class="{% if liked %}hidden{% endif %} like" href="{% url 'webapp:favorites_add' photo.photo.pk %}">Добавить в избранное</a>
-                <a class="{% if not liked %}hidden{% endif %} unlike" href="{% url 'webapp:favorites_delete' photo.photo.pk %}">Удалить из избранного</a>
-            {% endwith %}
-        </p>
+    <div class="box">
+        <h1 class="ml-5 pt-5">Личная страница пользователя {{ user_obj.get_full_name|default:user_obj.username }}</h1>
+        {% if user_obj.profile.avatar %}
+            <img class="avatar" src="{{ user_obj.profile.avatar.url }}" width="250" height="250" alt="user picture">
         {% endif %}
+        <p>Login: {{ user.username }}</p>
+        <p>Имя: {{ user.first_name }}</p>
+        <p>Фамилия: {{ user.last_name }}</p>
+        <p>Почта: {{ user_obj.email }}</p>
     </div>
-    <hr>
-    {% empty %}
-        <h2 class="text-center">Нет фотографий</h2>
-    {% endfor %}
+        <h2 class="text-center word">Понравившиеся фотографии:</h2>
+            {% for photo in gallery %}
+            <div class="box float-sm-left" >
+                        <a href="{% url 'webapp:one_photo_view' photo.photo.pk %}">
+                            <img src="{{ photo.photo.photo.url }}" width="335" height="200" alt="Foto">
+                        </a>
+                    <div class="text-center">
+                        <b> {{ photo.photo.signature }} </b><br>
+                        <b>Автор : <a href="{% url 'accounts:detail' photo.photo.author.pk %}"><b>{{ photo.photo.author }}. </b></a>
+                            | Дата: {{ photo.photo.created_at | date:"Y-m-d H:m:s"}}</b>
+                        {% if user.is_authenticated %}
+                            {% with photo.photo|liked_by:user as liked %}
+                                <div class=" col-lg-12">
+                                    <a class="{% if liked %}hidden{% endif %} like" href="{% url 'webapp:favorites_add' photo.photo.pk %}">Добавить в избранное</a>
+                                    <a class="{% if not liked %}hidden{% endif %} unlike" href="{% url 'webapp:favorites_delete' photo.photo.pk %}">Удалить из избранного</a>
+                                </div>
+                            {% endwith %}
+                        {% endif %}
+                    </div>
+            </div>
+            {% empty %}
+                <h2 class="text-center">Нет фотографий</h2>
+            {% endfor %}
+    <hr class="clear mt-5 pt-5">
 {#    {% include 'partial/partial_list.html' %}#}
 {#    {% for photo in gallery %}#}
 {#        <div class="row">#}
