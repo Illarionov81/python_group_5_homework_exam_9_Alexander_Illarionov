@@ -16,8 +16,7 @@ class PhotoView(ListView):
     context_object_name = 'gallery'
     model = Gallery
     ordering = ['-created_at']
-    paginate_by = 5
-    paginate_orphans = 0
+
 
 
 class OnePhotoView(DetailView):
