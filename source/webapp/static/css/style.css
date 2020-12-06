@@ -103,6 +103,11 @@ hr {
     black -1px -1px, black 0px -1px, black 1px -1px;
 }
 
+img {
+  display: block;
+  max-width: 100%;
+}
+
 .text-center {
     text-align: center;
 }
