@@ -25,7 +25,7 @@ SECRET_KEY = 'spe5j5$3n8q4tf43q=t(e13co9$uu7^48s(c$qwaw4qcu+e!1a'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -144,8 +144,8 @@ ACTIVATE_USERS_EMAIL = False  # True
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 MEDIA_URL = '/media/'
-
-try:
-    from .settings_local import *
-except ImportError:
-    pass
+#
+# try:
+#     from .settings_local import *
+# except ImportError:
+#     pass
