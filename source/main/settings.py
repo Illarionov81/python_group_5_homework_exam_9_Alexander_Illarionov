@@ -144,8 +144,8 @@ ACTIVATE_USERS_EMAIL = False  # True
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 MEDIA_URL = '/media/'
-#
-# try:
-#     from .settings_local import *
-# except ImportError:
-#     pass
+
+try:
+    from .settings_local import *
+except ImportError:
+    pass
