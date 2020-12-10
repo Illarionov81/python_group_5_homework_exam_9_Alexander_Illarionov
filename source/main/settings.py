@@ -25,7 +25,7 @@ SECRET_KEY = 'spe5j5$3n8q4tf43q=t(e13co9$uu7^48s(c$qwaw4qcu+e!1a'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['kyrgyzmountain.ga']
 
 
 # Application definition
