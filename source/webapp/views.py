@@ -46,9 +46,6 @@ class PhotoCreateView(LoginRequiredMixin, CreateView):
         photo.save()
         return redirect('webapp:one_photo_view', pk=photo.pk)
 
-    def get_success_url(self):
-        return reverse('product_view', kwargs={'pk': self.object.pk})
-
 
 class PhotoUpdateView(UserPassesTestMixin, UpdateView):
     template_name = 'photo/photo_update.html'
